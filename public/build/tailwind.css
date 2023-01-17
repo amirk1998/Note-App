@@ -1,4 +1,4 @@
-@import url('./fonts.css');
+@import url('/src/css/fonts.css');
 /*
 ! tailwindcss v3.2.4 | MIT License | https://tailwindcss.com
 */
@@ -486,6 +486,9 @@ video {
 .bg-emerald-600{
   --tw-bg-opacity: 1;
   background-color: rgb(5 150 105 / var(--tw-bg-opacity));
+}
+.bg-gradient-to-b{
+  background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
 }
 .from-slate-600{
   --tw-gradient-from: #475569;
