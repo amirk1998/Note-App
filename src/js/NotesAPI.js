@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 export default class NoteAPI {
   //
   static getAllNotes() {
@@ -21,7 +22,8 @@ export default class NoteAPI {
       existedNote.updated = new Date().toISOString();
     } else {
       // noteToSave.id = uuidv4();
-      noteToSave.id = new Date().getTime();
+      // noteToSave.id = new Date().getTime();
+      noteToSave.id = uuidv4();
       noteToSave.updated = new Date().toISOString();
       notes.push(noteToSave);
     }

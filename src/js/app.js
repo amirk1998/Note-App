@@ -13,7 +13,12 @@ const view = new NotesView(app, {
   onNoteEdit(newTitle, newBody) {
     console.log(newTitle, newBody);
   },
+  onNoteSelect(noteId) {
+    console.log(noteId);
+  },
 });
+
+view.updateNoteList(NoteAPI.getAllNotes());
 
 // const notes = [
 //   {
@@ -43,5 +48,3 @@ const view = new NotesView(app, {
 // ];
 
 // console.log(NoteAPI.getAllNotes());
-
-document.addEventListener;

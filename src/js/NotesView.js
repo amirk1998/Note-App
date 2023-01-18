@@ -5,11 +5,13 @@ export default class NotesView {
     const { onNoteAdd, onNoteEdit, onNoteSelect, onNoteDelete } = handlers;
     this.onNoteAdd = onNoteAdd;
     this.onNoteEdit = onNoteEdit;
+    this.onNoteSelect = onNoteSelect;
+    this.onNoteDelete = onNoteDelete;
     this.root.innerHTML = `
     <div class="notes-sidebar z-10 h-screen w-64 sticky top-0 right-0 flex flex-col bg-gradient-to-b from-slate-600 via-slate-700 to-slate-800 transition-all duration-300 ease-out pt-6 px-3 pb-[0.2rem] rounded-tl-[100px]">
         <div class="notes-logo uppercase text-5xl tracking-[0.2rem] font-extrabold border-b-[1px] border-solid border-white border-opacity-20 py-8 px-0 text-center text-white">NOTE APP</div>
         <div class="notes-list flex-grow my-4 overflow-auto scrollbar-hide">
-          
+        <!-- Note List -->
         </div>
         <button class="add-notes bg-emerald-600 hover:bg-emerald-500 border-none rounded-lg text-violet-100 cursor-pointer text-xl font-bold mb-4 py-3 px-0 w-full transition-all duration-300 ease-in-out" aria-label="add-notes">Add Note</button>
       </div>
@@ -34,6 +36,41 @@ export default class NotesView {
         const newTitle = inputTitle.value.trim();
         const newBody = inputBody.value.trim();
         this.onNoteEdit(newTitle, newBody);
+      });
+    });
+  }
+
+  _createListItemHTML(id, title, body, updated) {
+    const Max_Body_Length = 50;
+    const date = new Date(updated).toLocaleString('en', { dateStyle: 'full', timeStyle: 'short' });
+    return `<!-- Item -->
+    <div class="notes-list-item border-b-[1px] border-solid border-white border-opacity-20 my-4 cursor-pointer text-white" data-note-id="${id}"> 
+      <div class="notes-small-title p-3 text-xl">${title}</div>
+      <div class="notes-small-body px-3 py-0">
+      ${body.substring(0, Max_Body_Length)}
+      ${body.length > Max_Body_Length ? '...' : ''}
+      </div>
+      <div class="notes-small-updated p-3 text-neutral-400 italic text-left">${date}</div>
+    </div>
+    `;
+  }
+
+  updateNoteList(notes) {
+    //
+    const notesContainer = this.root.querySelector('.notes-list');
+
+    // empty note list
+    notesContainer.innerHTML = '';
+    let notesList = '';
+    for (const note of notes) {
+      const { id, title, body, updated } = note;
+      const htmlNoteList = this._createListItemHTML(id, title, body, updated);
+      notesList += htmlNoteList;
+    }
+    notesContainer.innerHTML = notesList;
+    notesContainer.querySelectorAll('.notes-list-item').forEach((noteItem) => {
+      noteItem.addEventListener('click', () => {
+        this.onNoteSelect(noteItem.dataset.noteId);
       });
     });
   }
