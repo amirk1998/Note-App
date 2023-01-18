@@ -6,7 +6,14 @@ import NotesView from './NotesView.js';
 
 const app = document.getElementById('app');
 
-const view = new NotesView(app);
+const view = new NotesView(app, {
+  onNoteAdd() {
+    console.log('Note has been added');
+  },
+  onNoteEdit(newTitle, newBody) {
+    console.log(newTitle, newBody);
+  },
+});
 
 // const notes = [
 //   {
@@ -36,3 +43,5 @@ const view = new NotesView(app);
 // ];
 
 // console.log(NoteAPI.getAllNotes());
+
+document.addEventListener;

@@ -1,12 +1,15 @@
 export default class NotesView {
   //
-  constructor(root) {
+  constructor(root, handlers) {
     this.root = root;
+    const { onNoteAdd, onNoteEdit, onNoteSelect, onNoteDelete } = handlers;
+    this.onNoteAdd = onNoteAdd;
+    this.onNoteEdit = onNoteEdit;
     this.root.innerHTML = `
     <div class="notes-sidebar z-10 h-screen w-64 sticky top-0 right-0 flex flex-col bg-gradient-to-b from-slate-600 via-slate-700 to-slate-800 transition-all duration-300 ease-out pt-6 px-3 pb-[0.2rem] rounded-tl-[100px]">
         <div class="notes-logo uppercase text-5xl tracking-[0.2rem] font-extrabold border-b-[1px] border-solid border-white border-opacity-20 py-8 px-0 text-center text-white">NOTE APP</div>
         <div class="notes-list flex-grow my-4 overflow-auto scrollbar-hide">
-         ITEMS
+          
         </div>
         <button class="add-notes bg-emerald-600 hover:bg-emerald-500 border-none rounded-lg text-violet-100 cursor-pointer text-xl font-bold mb-4 py-3 px-0 w-full transition-all duration-300 ease-in-out" aria-label="add-notes">Add Note</button>
       </div>
@@ -15,5 +18,23 @@ export default class NotesView {
         <textarea name="notes-body" id="notes-body" class="notes-body border-none outline-none w-full rounded-2xl py-4 px-6 flex-grow text-xl leading-6 mt-8 resize-none" aria-label="notes-body" placeholder="Take some notes ..."></textarea>
       </div>
     `;
+
+    const addNoteBtn = this.root.querySelector('.add-notes');
+    const inputTitle = this.root.querySelector('.notes-title');
+    const inputBody = this.root.querySelector('.notes-body');
+
+    addNoteBtn.addEventListener('click', () => {
+      // Execute add note
+      this.onNoteAdd();
+    });
+
+    [inputTitle, inputBody].forEach((inputField) => {
+      inputField.addEventListener('blur', () => {
+        //
+        const newTitle = inputTitle.value.trim();
+        const newBody = inputBody.value.trim();
+        this.onNoteEdit(newTitle, newBody);
+      });
+    });
   }
 }
