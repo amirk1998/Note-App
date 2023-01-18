@@ -16,6 +16,9 @@ const view = new NotesView(app, {
   onNoteSelect(noteId) {
     console.log(noteId);
   },
+  onNoteDelete(noteId) {
+    console.log(noteId);
+  },
 });
 
 view.updateNoteList(NoteAPI.getAllNotes());
@@ -47,4 +50,4 @@ view.updateNoteList(NoteAPI.getAllNotes());
 //   },
 // ];
 
-// console.log(NoteAPI.getAllNotes());
+console.log(NoteAPI.getAllNotes());
