@@ -15,7 +15,7 @@ export default class NotesView {
         </div>
         <button class="add-notes bg-emerald-600 hover:bg-emerald-500 border-none rounded-lg text-violet-100 cursor-pointer text-xl font-bold mb-4 py-3 px-0 w-full transition-all duration-300 ease-in-out" aria-label="add-notes">Add Note</button>
       </div>
-      <div class="notes-preview flex flex-col py-8 px-12 flex-grow">
+      <div class="notes-preview hidden flex flex-col py-8 px-12 flex-grow">
         <input type="text" name="notes-title" id="notes-title" class="notes-title border-none outline-none w-full rounded-2xl py-4 px-6 font-bold text-5xl" aria-label="notes-title" placeholder="Note Title ... " />
         <textarea name="notes-body" id="notes-body" class="notes-body border-none outline-none w-full rounded-2xl py-4 px-6 flex-grow text-xl leading-6 mt-8 resize-none" aria-label="notes-body" placeholder="Take some notes ..."></textarea>
       </div>
@@ -48,7 +48,7 @@ export default class NotesView {
     const date = new Date(updated).toLocaleString('en', { dateStyle: 'full', timeStyle: 'short' });
     return `<!-- Item -->
     <div x-data="{selectedNote : '' , ActiveNote : false , defaultClass : 'text-white' , activeClass : 'bg-gray-100 text-neutral-500'}">
-      <div @click="selectedNote = ${id}" :class="selectedNote == ${id} ? activeClass : defaultClass" class="notes-item-div rounded-xl" data-note-id="${id}">
+      <div @click="selectedNote = ${id} " :class="ActiveNote ? activeClass : defaultClass" class="notes-item-div rounded-xl" data-note-id="${id}">
         <div class="notes-list-item my-4 cursor-pointer rounded-xl border-b-[1px] border-solid border-white border-opacity-20 pb-2" data-note-id="${id}">
         <div class="flex items-center justify-between">
         <div class="notes-small-title p-3 text-xl">${title}</div>
@@ -112,6 +112,6 @@ export default class NotesView {
 
   updateNotePreviewVisibility(condition) {
     //
-    this.root.querySelector('.notes-preview').classList.add(condition ? 'visible' : 'hidden');
+    this.root.querySelector('.notes-preview').classList.remove(condition ? 'hidden' : 'visible');
   }
 }

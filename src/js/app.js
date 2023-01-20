@@ -17,14 +17,19 @@ export default class App {
     this.view.updateNoteList(notes);
     this.view.updateNotePreviewVisibility(notes.length > 0);
     // Set Active Note :
-    this.activeNote = notes[0];
-    this.view.updateActiveNote(notes[0]);
+    // this.activeNote = notes[0];
+    // this.view.updateActiveNote(notes[0]);
   }
 
   _handlers() {
     return {
       onNoteAdd: () => {
-        console.log('Note has been added');
+        const newNote = {
+          title: 'New Note',
+          body: 'Take Some Note',
+        };
+        NoteAPI.saveNote(newNote);
+        this._refreshNotes();
       },
       onNoteEdit: (newTitle, newBody) => {
         console.log(newTitle, newBody);
