@@ -1,53 +1,57 @@
-// import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
-// console.log(uuidv4());
-
 import NoteAPI from './NotesAPI.js';
 import NotesView from './NotesView.js';
 
-const app = document.getElementById('app');
+export default class App {
+  constructor(root) {
+    //
+    this.notes = [];
+    this.activeNote = null;
+    this.view = new NotesView(root, this._handlers());
+    this._refreshNotes();
+  }
 
-const view = new NotesView(app, {
-  onNoteAdd() {
-    console.log('Note has been added');
-  },
-  onNoteEdit(newTitle, newBody) {
-    console.log(newTitle, newBody);
-  },
-  onNoteSelect(noteId) {
-    console.log(noteId);
-  },
-  onNoteDelete(noteId) {
-    console.log(noteId);
-  },
-});
+  _refreshNotes() {
+    const notes = NoteAPI.getAllNotes();
+    // Set Notes :
+    this.notes = notes;
+    this.view.updateNoteList(notes);
+    this.view.updateNotePreviewVisibility(notes.length > 0);
+    // Set Active Note :
+    this.activeNote = notes[0];
+    this.view.updateActiveNote(notes[0]);
+  }
 
-view.updateNoteList(NoteAPI.getAllNotes());
+  _handlers() {
+    return {
+      onNoteAdd: () => {
+        console.log('Note has been added');
+      },
+      onNoteEdit: (newTitle, newBody) => {
+        console.log(newTitle, newBody);
+      },
+      onNoteSelect: (noteId) => {
+        const selectedNote = this.notes.find((n) => n.id == noteId);
+        this.activeNote = selectedNote;
+        this.view.updateActiveNote(selectedNote);
+      },
+      onNoteDelete: (noteId) => {
+        console.log(noteId);
+      },
+    };
+  }
+}
 
-// const notes = [
-//   {
-//     id: 1,
-//     title: 'First Note',
-//     body: 'This is my first note',
-//     updated: '2023-01-12T14:15:00.000Z',
+// const view = new NotesView(app, {
+//   onNoteAdd() {
+//     console.log('Note has been added');
 //   },
-//   {
-//     id: 2,
-//     title: 'Second Note',
-//     body: 'This is my second note',
-//     updated: '2023-01-16T09:15:00.000Z',
+//   onNoteEdit(newTitle, newBody) {
+//     console.log(newTitle, newBody);
 //   },
-//   {
-//     id: 3,
-//     title: 'Third Note',
-//     body: 'This is my third note',
-//     updated: '2023-01-17T14:57:00.336Z',
+//   onNoteSelect(noteId) {
+//     console.log(noteId);
 //   },
-//   {
-//     id: 4,
-//     title: 'Delete Note',
-//     body: 'Dummy Text',
-//     updated: '2023-01-11T06:15:00.000Z',
+//   onNoteDelete(noteId) {
+//     console.log(noteId);
 //   },
-// ];
-
-console.log(NoteAPI.getAllNotes());
+// });

@@ -3,6 +3,8 @@ export default class NoteAPI {
   //
   static getAllNotes() {
     //
+    // const savedNotes = JSON.parse(localStorage.getItem('notes-app')) || [];
+    //
     const notes = [
       {
         id: 1,
@@ -29,7 +31,7 @@ export default class NoteAPI {
         updated: '2023-01-11T06:15:00.000Z',
       },
     ];
-    // const savedNotes = JSON.parse(localStorage.getItem('notes-app')) || [];
+
     const savedNotes = notes;
     //
 

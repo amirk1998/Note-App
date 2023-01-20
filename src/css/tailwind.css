@@ -2,14 +2,3 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@layer components {
-  .not-clicked {
-    @apply text-white border-b-[1px] border-solid border-white border-opacity-20 my-4 pb-2 cursor-pointer rounded-xl;
-  }
-
-  ,
-  .clicked-item {
-    @apply z-20 bg-white text-neutral-500 border-b-[1px] border-solid border-white border-opacity-20 my-4 pb-2 cursor-pointer rounded-xl;
-  }
-}
