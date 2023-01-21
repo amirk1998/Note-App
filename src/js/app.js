@@ -26,7 +26,7 @@ export default class App {
       onNoteAdd: () => {
         const newNote = {
           title: 'New Note',
-          body: 'Take Some Note',
+          body: 'Take Some Note ...',
         };
         NoteAPI.saveNote(newNote);
         this._refreshNotes();
@@ -38,6 +38,7 @@ export default class App {
         const selectedNote = this.notes.find((n) => n.id == noteId);
         this.activeNote = selectedNote;
         this.view.updateActiveNote(selectedNote);
+        console.log(noteId);
       },
       onNoteDelete: (noteId) => {
         console.log(noteId);

@@ -15,10 +15,12 @@ export default class NotesView {
         </div>
         <button class="add-notes bg-emerald-600 hover:bg-emerald-500 border-none rounded-lg text-violet-100 cursor-pointer text-xl font-bold mb-4 py-3 px-0 w-full transition-all duration-300 ease-in-out" aria-label="add-notes">Add Note</button>
       </div>
-      <div class="notes-preview hidden flex flex-col py-8 px-12 flex-grow">
-        <input type="text" name="notes-title" id="notes-title" class="notes-title border-none outline-none w-full rounded-2xl py-4 px-6 font-bold text-5xl" aria-label="notes-title" placeholder="Note Title ... " />
-        <textarea name="notes-body" id="notes-body" class="notes-body border-none outline-none w-full rounded-2xl py-4 px-6 flex-grow text-xl leading-6 mt-8 resize-none" aria-label="notes-body" placeholder="Take some notes ..."></textarea>
+      
+      <div class="notes-preview hidden flex flex-grow flex-col py-8 px-12">
+          <input type="text" name="notes-title" id="notes-title" class="notes-title w-full rounded-2xl border-none py-4 px-6 text-5xl font-bold outline-none" aria-label="notes-title" placeholder="Note Title ... " />
+          <textarea name="notes-body" id="notes-body" class="notes-body mt-8 w-full flex-grow resize-none rounded-2xl border-none py-4 px-6 text-xl leading-6 outline-none" aria-label="notes-body" placeholder="Take some notes ..."></textarea>
       </div>
+
     `;
 
     const addNoteBtn = this.root.querySelector('.add-notes');
@@ -46,9 +48,10 @@ export default class NotesView {
   _createListItemHTML(id, title, body, updated) {
     const Max_Body_Length = 50;
     const date = new Date(updated).toLocaleString('en', { dateStyle: 'full', timeStyle: 'short' });
-    return `<!-- Item -->
+    return `
     <div x-data="{selectedNote : '' , ActiveNote : false , defaultClass : 'text-white' , activeClass : 'bg-gray-100 text-neutral-500'}">
-      <div @click="selectedNote = ${id} " :class="ActiveNote ? activeClass : defaultClass" class="notes-item-div rounded-xl" data-note-id="${id}">
+    <!-- Item -->
+      <div @click="selectedNote = ${id} " :class="selectedNote == ${id} ? activeClass : defaultClass" class="notes-item-div rounded-xl" data-note-id="${id}">
         <div class="notes-list-item my-4 cursor-pointer rounded-xl border-b-[1px] border-solid border-white border-opacity-20 pb-2" data-note-id="${id}">
         <div class="flex items-center justify-between">
         <div class="notes-small-title p-3 text-xl">${title}</div>

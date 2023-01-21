@@ -52,8 +52,8 @@ export default class NoteAPI {
       existedNote.updated = new Date().toISOString();
     } else {
       // noteToSave.id = uuidv4();
-      // noteToSave.id = new Date().getTime();
-      noteToSave.id = uuidv4();
+      noteToSave.id = new Date().getTime();
+      // noteToSave.id = uuidv4();
       noteToSave.updated = new Date().toISOString();
       notes.push(noteToSave);
     }
