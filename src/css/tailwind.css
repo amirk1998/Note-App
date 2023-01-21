@@ -2,3 +2,14 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  .item-is-selected {
+    @apply z-30 bg-gray-100 text-neutral-500 !important;
+  }
+}
+@layer components {
+  .item-not-selected {
+    @apply text-white;
+  }
+}

@@ -46,15 +46,15 @@ export default class NotesView {
   }
 
   _createListItemHTML(id, title, body, updated) {
-    const Max_Body_Length = 50;
+    const Max_Body_Length = 30;
     const date = new Date(updated).toLocaleString('en', { dateStyle: 'full', timeStyle: 'short' });
     return `
-    <div x-data="{selectedNote : '' , ActiveNote : false , defaultClass : 'text-white' , activeClass : 'bg-gray-100 text-neutral-500'}">
+    <div >
     <!-- Item -->
-      <div @click="selectedNote = ${id} " :class="selectedNote == ${id} ? activeClass : defaultClass" class="notes-item-div rounded-xl" data-note-id="${id}">
-        <div class="notes-list-item my-4 cursor-pointer rounded-xl border-b-[1px] border-solid border-white border-opacity-20 pb-2" data-note-id="${id}">
+      <div class="notes-item-div item-not-selected rounded-xl" data-note-id="${id}">
+        <div class="notes-list-item my-4 cursor-pointer rounded-xl border-b-[1px] border-solid border-white border-opacity-20 pb-2 " data-note-id="${id}">
         <div class="flex items-center justify-between">
-        <div class="notes-small-title p-3 text-xl">${title}</div>
+        <div class="notes-small-title p-3 text-xl">${title.substring(0, 15)} ${title.length > 15 ? '...' : ''}</div>
         <span class="note-list-trash ml-2" data-note-id="${id}"
           ><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="h-5 w-5 stroke-red-500 hover:stroke-red-300">
             <path
@@ -65,7 +65,7 @@ export default class NotesView {
           </svg>
         </span>
         </div>
-      <div class="notes-small-body px-3 py-0">${body.substring(0, Max_Body_Length)} ${body.length > Max_Body_Length ? '...' : ''}</div>
+      <div class="notes-small-body px-3 py-0 ">${body.substring(0, Max_Body_Length)} ${body.length > Max_Body_Length ? '...' : ''}</div>
       <div class="notes-small-updated p-3 text-left italic text-neutral-400">${date}</div>
     </div>
   </div>
@@ -88,7 +88,7 @@ export default class NotesView {
       notesList += htmlNoteList;
     }
     notesContainer.innerHTML = notesList;
-    notesContainer.querySelectorAll('.notes-list-item').forEach((noteItem) => {
+    notesContainer.querySelectorAll('.notes-item-div').forEach((noteItem) => {
       noteItem.addEventListener('click', () => {
         this.onNoteSelect(noteItem.dataset.noteId);
       });
@@ -107,6 +107,13 @@ export default class NotesView {
     this.root.querySelector('.notes-title').value = note.title;
     this.root.querySelector('.notes-body').value = note.body;
 
+    this.root.querySelectorAll('.notes-item-div').forEach((item) => {
+      item.classList.remove('item-is-selected');
+      item.classList.add('item-not-selected');
+    });
+
+    this.root.querySelector(`.notes-item-div[data-note-id="${note.id}"]`).classList.add('item-is-selected');
+    this.root.querySelector(`.notes-item-div[data-note-id="${note.id}"]`).classList.remove('item-not-selected');
     // add selected Class
     // this.root.querySelector(`.notes-item-div[data-note-id="${note.id}"]`).classList.remove('text-white');
     // this.root.querySelector(`.notes-item-div[data-note-id="${note.id}"]`).classList.add('bg-gray-100');

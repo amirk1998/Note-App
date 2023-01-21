@@ -13,12 +13,21 @@ export default class App {
   _refreshNotes() {
     const notes = NoteAPI.getAllNotes();
     // Set Notes :
+    this._setNotes(notes);
+    // Set Active Note :
+    if (notes.length > 0) {
+      this._setActiveNote(notes[0]);
+    }
+  }
+
+  _setActiveNote(note) {
+    this.activeNote = note;
+    this.view.updateActiveNote(note);
+  }
+  _setNotes(notes) {
     this.notes = notes;
     this.view.updateNoteList(notes);
     this.view.updateNotePreviewVisibility(notes.length > 0);
-    // Set Active Note :
-    // this.activeNote = notes[0];
-    // this.view.updateActiveNote(notes[0]);
   }
 
   _handlers() {
@@ -32,32 +41,24 @@ export default class App {
         this._refreshNotes();
       },
       onNoteEdit: (newTitle, newBody) => {
-        console.log(newTitle, newBody);
+        //
+        NoteAPI.saveNote({
+          id: this.activeNote.id,
+          title: newTitle,
+          body: newBody,
+        });
+        this._refreshNotes();
       },
       onNoteSelect: (noteId) => {
         const selectedNote = this.notes.find((n) => n.id == noteId);
-        this.activeNote = selectedNote;
-        this.view.updateActiveNote(selectedNote);
-        console.log(noteId);
+        this._setActiveNote(selectedNote);
       },
       onNoteDelete: (noteId) => {
-        console.log(noteId);
+        NoteAPI.deleteNote(noteId);
+        this._refreshNotes();
       },
     };
   }
 }
 
-// const view = new NotesView(app, {
-//   onNoteAdd() {
-//     console.log('Note has been added');
-//   },
-//   onNoteEdit(newTitle, newBody) {
-//     console.log(newTitle, newBody);
-//   },
-//   onNoteSelect(noteId) {
-//     console.log(noteId);
-//   },
-//   onNoteDelete(noteId) {
-//     console.log(noteId);
-//   },
-// });
+// console.log(crypto.randomUUID().toString());
