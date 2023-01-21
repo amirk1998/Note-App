@@ -49,8 +49,7 @@ export default class NotesView {
     const Max_Body_Length = 30;
     const date = new Date(updated).toLocaleString('en', { dateStyle: 'full', timeStyle: 'short' });
     return `
-    <div >
-    <!-- Item -->
+      <!-- Item -->
       <div class="notes-item-div item-not-selected rounded-xl" data-note-id="${id}">
         <div class="notes-list-item my-4 cursor-pointer rounded-xl border-b-[1px] border-solid border-white border-opacity-20 pb-2 " data-note-id="${id}">
         <div class="flex items-center justify-between">
@@ -69,7 +68,7 @@ export default class NotesView {
       <div class="notes-small-updated p-3 text-left italic text-neutral-400">${date}</div>
     </div>
   </div>
-</div>
+
 
       <!-- <hr class="border-white border-opacity-20"> -->
     `;
@@ -106,18 +105,16 @@ export default class NotesView {
     //
     this.root.querySelector('.notes-title').value = note.title;
     this.root.querySelector('.notes-body').value = note.body;
+    console.log(note.id);
 
     this.root.querySelectorAll('.notes-item-div').forEach((item) => {
       item.classList.remove('item-is-selected');
       item.classList.add('item-not-selected');
     });
 
-    this.root.querySelector(`.notes-item-div[data-note-id="${note.id}"]`).classList.add('item-is-selected');
-    this.root.querySelector(`.notes-item-div[data-note-id="${note.id}"]`).classList.remove('item-not-selected');
     // add selected Class
-    // this.root.querySelector(`.notes-item-div[data-note-id="${note.id}"]`).classList.remove('text-white');
-    // this.root.querySelector(`.notes-item-div[data-note-id="${note.id}"]`).classList.add('bg-gray-100');
-    // this.root.querySelector(`.notes-item-div[data-note-id="${note.id}"]`).classList.add('text-neutral-500');
+    this.root.querySelector(`.notes-item-div[data-note-id="${note.id}"]`).classList.remove('item-not-selected');
+    this.root.querySelector(`.notes-item-div[data-note-id="${note.id}"]`).classList.add('item-is-selected');
   }
 
   updateNotePreviewVisibility(condition) {

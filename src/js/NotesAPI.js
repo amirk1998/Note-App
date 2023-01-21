@@ -1,4 +1,3 @@
-// import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 export default class NoteAPI {
   //
   static getAllNotes() {
@@ -51,7 +50,8 @@ export default class NoteAPI {
       existedNote.body = noteToSave.body;
       existedNote.updated = new Date().toISOString();
     } else {
-      noteToSave.id = new Date().getTime();
+      // noteToSave.id = new Date().getTime();
+      noteToSave.id = crypto.randomUUID();
       noteToSave.updated = new Date().toISOString();
       notes.push(noteToSave);
     }
